@@ -50,8 +50,12 @@ class PollController extends Controller
   {
     $body = $this->json();
 
-    $this->service->delete(
-      $body->poll_id
-    );
+    if (isset($body)) {
+      $this->service->delete(
+        $body->poll_id
+      );
+    } else {
+      http_response_code(500);
+    }
   }
 }

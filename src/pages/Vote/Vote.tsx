@@ -10,6 +10,7 @@ import Button from "../../components/Button";
 import PollService from "../../services/Poll";
 import Colors from "../../styles/colors";
 import PollVote from "../../services/PollVote";
+import formatDate from "../../utils/formatDate";
 
 const Title = styled.h1`
   font-size: 1.3rem;
@@ -44,18 +45,30 @@ const OptionVote = styled(Checkbox)`
   margin-right: 0.4rem;
 `;
 
+const PollDate = styled.span`
+  font-size: 0.9rem;
+  margin-top: 1rem;
+  margin-bottom: -0.3rem;
+`;
+
 function Vote() {
   const history = useHistory();
   const { poll } = useParams();
 
-  const [pollData, setPollData] = useState<PollModel | undefined>();
+  const [pollData, setPollData] = useState<
+    PollWithOptionsAndVotes | undefined
+  >();
   const [selectedOption, setSelectedOption] = useState<number | undefined>();
 
   const [disabled, setDisabled] = useState(false);
 
   useEffect(() => {
     PollService.get(poll)
-      .then((res) => {
+      .then((res: PollWithOptionsAndVotes) => {
+        if (new Date().getTime() > new Date(res.date_end).getTime()) {
+          setDisabled(true);
+        }
+
         setPollData(res);
       })
       .catch((e) => {
@@ -87,8 +100,12 @@ function Vote() {
   return (
     <BackgroundWithCard>
       <BackButton onClick={goBack} />
+      <PollDate>
+        {formatDate(pollData?.date_start || Date())} -{" "}
+        {formatDate(pollData?.date_end || Date())}
+      </PollDate>
       <Title>{pollData?.title}</Title>
-      <Votes>0 votos</Votes>
+      <Votes>{pollData?.votes || 0} votos</Votes>
       {pollData?.options?.map((option) => (
         <Option>
           <OptionVote

@@ -11,9 +11,7 @@ $controller = new PollController();
 
 switch ($_SERVER['REQUEST_METHOD']) {
   case 'GET':
-    $pollId = $_GET['pollId'];
-
-    if (isset($pollId)) {
+    if (isset($_GET['pollId'])) {
       $controller->get();
     } else {
       $controller->list();

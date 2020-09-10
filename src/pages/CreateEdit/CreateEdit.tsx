@@ -66,10 +66,6 @@ const OptionName = styled.span`
   font-size: 0.9rem;
 `;
 
-const OptionEdit = styled(IconButton).attrs({
-  withImage: Edit,
-})``;
-
 const OptionDelete = styled(IconButton).attrs({
   withImage: Delete,
 })``;
@@ -83,7 +79,7 @@ const AddOptionButton = styled(Button).attrs({
   withImage: Add,
   imageSize: 9,
 })`
-  height: 100%;
+  padding: 0.9rem;
 `;
 
 const CreateEdit = () => {
@@ -131,7 +127,7 @@ const CreateEdit = () => {
 
   const removeOption = (index: number) => {
     setOptions((opts) => {
-      const newOptionsArray = { ...opts };
+      const newOptionsArray = [...opts];
       newOptionsArray.splice(index, 1);
       return newOptionsArray;
     });
@@ -166,8 +162,7 @@ const CreateEdit = () => {
       {options.map((option, idx) => (
         <Option strip={isPair(idx)} key={idx}>
           <OptionName>{option}</OptionName>
-          <OptionEdit />
-          <OptionDelete />
+          <OptionDelete onClick={() => removeOption(idx)} />
         </Option>
       ))}
     </BackgroundWithCard>

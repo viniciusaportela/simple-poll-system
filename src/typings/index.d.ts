@@ -21,3 +21,25 @@ declare interface PollVoteModel {
   id: number;
   poll_option_id: string;
 }
+
+/**
+ * Special Types, Responses
+ */
+declare interface PollWithVotes extends PollModel {
+  votes: number;
+}
+
+declare interface PollList {
+  going: PollWithVotes[];
+  soon: PollWithVotes[];
+  finished: PollWithVotes[];
+}
+
+declare interface PollOptionWithVotes extends PollOptionModel {
+  votes: number;
+}
+
+declare interface PollWithOptionsAndVotes extends PollModel {
+  votes: number;
+  options: PollOptionWithVotes[];
+}

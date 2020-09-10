@@ -16,6 +16,16 @@ export default class PollService {
     }
   }
 
+  static async getAll() {
+    try {
+      const res = await axios.get(`${API_SERVER}/v1/polls/`);
+
+      return res.data;
+    } catch (e) {
+      treatCatch(e);
+    }
+  }
+
   static async create({
     title,
     dateStart,
@@ -36,6 +46,18 @@ export default class PollService {
       });
 
       return res.data;
+    } catch (e) {
+      treatCatch(e);
+    }
+  }
+
+  static async delete(pollId: any) {
+    try {
+      await axios({
+        method: "DELETE",
+        data: { poll_id: pollId },
+        url: `${API_SERVER}/v1/polls/`,
+      });
     } catch (e) {
       treatCatch(e);
     }

@@ -19,6 +19,12 @@ class PollService extends Service
     $getStatement = $this->db->prepare(
       "SELECT 
           `poll`.*,
+          (
+            SELECT COUNT(`poll_vote`.`id`)
+            FROM `poll_vote`
+            INNER JOIN `poll_option` ON `poll_option`.`id` = `poll_vote`.`poll_option_id`
+            WHERE `poll_option`.`poll_id` = `poll`.`id`
+          ) AS `votes`,
           JSON_ARRAYAGG(
             JSON_OBJECT(
               'id', `poll_option`.`id`,
@@ -55,6 +61,56 @@ class PollService extends Service
    */
   public function list()
   {
+    $goingQuery = $this->db->query(
+      "SELECT `poll`.*, 
+      (
+        SELECT COUNT(`poll_vote`.`id`)
+        FROM `poll_vote`
+        INNER JOIN `poll_option` ON `poll_option`.`id` = `poll_vote`.`poll_option_id`
+        WHERE `poll_option`.`poll_id` = `poll`.`id`
+      ) AS `votes`
+      FROM `poll`
+      WHERE CURDATE() BETWEEN `date_start` AND `date_end`
+      GROUP BY `poll`.`id`
+      "
+    );
+    $going = $goingQuery->fetchAll(PDO::FETCH_ASSOC);
+
+    $finishedQuery = $this->db->query(
+      "SELECT `poll`.*, 
+      (
+        SELECT COUNT(`poll_vote`.`id`)
+        FROM `poll_vote`
+        INNER JOIN `poll_option` ON `poll_option`.`id` = `poll_vote`.`poll_option_id`
+        WHERE `poll_option`.`poll_id` = `poll`.`id`
+      ) AS `votes`
+      FROM `poll`
+      WHERE `date_end` < CURDATE()
+      GROUP BY `poll`.`id`
+      "
+    );
+    $finished = $finishedQuery->fetchAll(PDO::FETCH_ASSOC);
+
+    $soonQuery = $this->db->query(
+      "SELECT `poll`.*, 
+      (
+        SELECT COUNT(`poll_vote`.`id`)
+        FROM `poll_vote`
+        INNER JOIN `poll_option` ON `poll_option`.`id` = `poll_vote`.`poll_option_id`
+        WHERE `poll_option`.`poll_id` = `poll`.`id`
+      ) AS `votes`
+      FROM `poll`
+      WHERE `date_start` > CURDATE()
+      GROUP BY `poll`.`id`
+      "
+    );
+    $soon = $soonQuery->fetchAll(PDO::FETCH_ASSOC);
+
+    return [
+      "going" => $going,
+      "finished" => $finished,
+      "soon" => $soon
+    ];
   }
 
   /**
