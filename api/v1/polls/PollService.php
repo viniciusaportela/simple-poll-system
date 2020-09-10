@@ -28,12 +28,17 @@ class PollService extends Service
           JSON_ARRAYAGG(
             JSON_OBJECT(
               'id', `poll_option`.`id`,
-              'value', `poll_option`.`value`
+              'value', `poll_option`.`value`,
+              'votes', (
+                SELECT COUNT(`pv`.`id`)
+                FROM `poll_vote` `pv`
+                WHERE `pv`.`poll_option_id` = `poll_option`.`id`
+              )
             )
-          ) as `options`
+          ) AS `options`
         FROM `poll` 
         LEFT JOIN `poll_option` ON `poll`.`id` = `poll_option`.`poll_id`
-        WHERE `poll`.`id` = ?
+        WHERE `poll`.`id` = 4
         GROUP BY `poll`.`id`
       "
     );
