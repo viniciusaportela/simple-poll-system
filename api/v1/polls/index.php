@@ -14,7 +14,7 @@ switch ($_SERVER['REQUEST_METHOD']) {
     $pollId = $_GET['pollId'];
 
     if (isset($pollId)) {
-      $controller->get($pollId);
+      $controller->get();
     } else {
       $controller->list();
     }

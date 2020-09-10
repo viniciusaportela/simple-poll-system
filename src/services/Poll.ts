@@ -7,13 +7,10 @@ export default class PollService {
   static async get(pollId: number) {
     try {
       const res = await axios.get(`${API_SERVER}/v1/polls/`, {
-        data: pollId ? { pollId } : undefined,
+        params: { ...(pollId && { pollId }) },
       });
 
-      return {
-        status: "success",
-        data: res.data,
-      };
+      return res.data;
     } catch (e) {
       treatCatch(e);
     }
@@ -29,7 +26,7 @@ export default class PollService {
     dateStart: string;
     dateEnd: string;
     options: string[];
-  }): Promise<ApiResponse | void> {
+  }) {
     try {
       const res = await axios.post(`${API_SERVER}/v1/polls/`, {
         title,
@@ -38,10 +35,7 @@ export default class PollService {
         options,
       });
 
-      return {
-        status: "success",
-        data: res.data,
-      };
+      return res.data;
     } catch (e) {
       treatCatch(e);
     }

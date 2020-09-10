@@ -10,10 +10,14 @@ class Database
     $connectionParams = "mysql:host=" . $config['connection']['host'];
     $connectionParams .= ";dbname=" . $config['connection']['database'];
 
-    $this->con = new PDO(
-      $connectionParams,
-      $config['connection']['user'],
-      $config['connection']['password']
-    );
+    try {
+      $this->con = new PDO(
+        $connectionParams,
+        $config['connection']['user'],
+        $config['connection']['password']
+      );
+    } catch (PDOException $ex) {
+      die(json_encode(array('outcome' => false, 'message' => 'Unable to connect')));
+    }
   }
 }

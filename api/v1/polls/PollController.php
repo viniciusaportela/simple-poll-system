@@ -14,13 +14,16 @@ class PollController extends Controller
   {
     $pollId = $_GET['pollId'];
 
-    $polls = $this->service->get($pollId);
+    $poll = $this->service->get($pollId);
 
-    return json_encode($polls);
+    echo json_encode($poll);
   }
 
   public function list()
   {
+    $polls = $this->service->list();
+
+    echo json_encode($polls);
   }
 
   public function create()

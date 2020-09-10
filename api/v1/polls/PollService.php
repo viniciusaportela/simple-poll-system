@@ -27,12 +27,22 @@ class PollService extends Service
           ) as `options`
         FROM `poll` 
         LEFT JOIN `poll_option` ON `poll`.`id` = `poll_option`.`poll_id`
-        WHERE `poll`.`id` = 31
+        WHERE `poll`.`id` = ?
         GROUP BY `poll`.`id`
       "
     );
 
-    return $getStatement->execute(array($pollId));
+    $getStatement->execute(array($pollId));
+
+    $res = $getStatement->fetch(PDO::FETCH_ASSOC);
+
+    return array(
+      "id" => intval($res['id']),
+      "title" => $res['title'],
+      "date_start" => $res['date_start'],
+      "date_end" => $res['date_end'],
+      "options" => json_decode($res['options']),
+    );
   }
 
   /**

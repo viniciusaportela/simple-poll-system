@@ -108,14 +108,14 @@ const CreateEdit = () => {
     if (options.length < 3) return alert("Insira pelo menos 3 Opções");
 
     try {
-      await PollService.create({
+      const res = await PollService.create({
         title,
         options,
         dateStart: "2020/09/10",
         dateEnd: "2020/09/11",
       });
 
-      history.push("/");
+      history.push(`/vote/${res.id}`);
     } catch (e) {
       // isApiError()
     }

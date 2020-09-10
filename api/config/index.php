@@ -4,6 +4,6 @@ $config = array(
     "host" => "localhost",
     "database" => "signovote",
     "user" => "root",
-    "password" => "",
+    "password" => "mysql",
   )
 );

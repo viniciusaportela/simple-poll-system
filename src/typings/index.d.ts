@@ -1,9 +1,23 @@
-declare interface ApiResponse {
-  status: ApiResponseStatus;
-  data?: any;
-  error?: any;
+type StatusOrErrorCode = string | number;
+
+/**
+ * Database Models
+ */
+declare interface PollModel {
+  id: number;
+  title: string;
+  date_start: string;
+  date_end: string;
+  options?: PollOptionModel[];
 }
 
-declare type ApiResponseStatus = "success" | "error";
+declare interface PollOptionModel {
+  id: number;
+  value: string;
+  poll_id: number;
+}
 
-declare type StatusOrErrorCode = number | string;
+declare interface PollVoteModel {
+  id: number;
+  poll_option_id: string;
+}

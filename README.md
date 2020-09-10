@@ -13,8 +13,11 @@ O projeto foi construido e testado usando as seguintes versões:
 > PHP 7.2.33
 > Node: ^12.16.3 (React)
 
+> Usando 'mysql_native_password' como credenciais para acessar ao banco
+
 # Introdução
 
+Tabelas do Banco em api/database/migrations/
 ...
 
 # Front-End

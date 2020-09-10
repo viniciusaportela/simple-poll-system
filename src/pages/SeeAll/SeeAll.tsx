@@ -1,11 +1,16 @@
 import React from "react";
-import { Link, useHistory } from "react-router-dom";
+import { useHistory } from "react-router-dom";
 import styled from "styled-components";
 
 import BackgroundWithCard from "../../components/BackgroundWithCard";
+import Button from "../../components/Button";
+import IconButton from "../../components/IconButton";
+
 import isPair from "../../utils/isPair";
 import Colors from "../../styles/colors";
-import Button from "../../components/Button";
+
+import Delete from "../../assets/images/delete.png";
+import Edit from "../../assets/images/edit.png";
 
 const CategoryTitle = styled.h1`
   font-size: 1.15rem;
@@ -39,9 +44,13 @@ const PollName = styled.span`
   margin-right: auto;
 `;
 
-const PollEdit = styled(Button)``;
+const PollEdit = styled(IconButton).attrs({
+  withImage: Edit,
+})``;
 
-const PollDelete = styled(Button)``;
+const PollDelete = styled(IconButton).attrs({
+  withImage: Delete,
+})``;
 
 const PollVote = styled(Button)``;
 

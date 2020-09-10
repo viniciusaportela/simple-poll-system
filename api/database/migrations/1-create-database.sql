@@ -1,2 +1,2 @@
-CREATE DATABASE signowebtestpool
-USE signowebtestpool
+CREATE DATABASE signovote;
+USE signovote;
