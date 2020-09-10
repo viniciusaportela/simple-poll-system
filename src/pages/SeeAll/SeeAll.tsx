@@ -1,52 +1,73 @@
 import React from "react";
+import { Link, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
+import BackgroundWithCard from "../../components/BackgroundWithCard";
+import isPair from "../../utils/isPair";
 import Colors from "../../styles/colors";
-
-import LogoImage from "../../assets/images/logo.png";
-import Card from "../../components/Card";
-
-const Container = styled.div`
-  width: 100%;
-  align-items: center;
-`;
-
-const TopBackground = styled.div`
-  width: 100%;
-  height: 10rem;
-  background-color: ${Colors.PRIMARY};
-`;
-
-const Logo = styled.img.attrs({
-  src: LogoImage,
-})`
-  object-fit: contain;
-  position: absolute;
-  left: 10px;
-  top: 10px;
-  width: 80px;
-`;
-
-const VotesCard = styled(Card)`
-  width: 80%;
-  margin-top: -4rem;
-`;
+import Button from "../../components/Button";
 
 const CategoryTitle = styled.h1`
   font-size: 1.15rem;
 `;
 
+const Alert = styled.div`
+  flex-direction: row;
+  background-color: ${Colors.PRIMARY_FADED};
+  border-radius: 4px;
+  padding: 0.3rem;
+  align-items: center;
+`;
+
+const AlertText = styled.span`
+  margin-right: auto;
+`;
+
+const AlertButton = styled(Button)`
+  padding: 0.6rem 3rem;
+`;
+
+const Poll = styled.div<{ strip?: boolean }>`
+  padding: 0.3rem;
+  flex-direction: row;
+  align-items: center;
+  width: 100%;
+  background-color: ${({ strip }) => (strip ? Colors.GRAY_1 : "transparent")};
+`;
+
+const PollName = styled.span`
+  margin-right: auto;
+`;
+
+const PollEdit = styled(Button)``;
+
+const PollDelete = styled(Button)``;
+
+const PollVote = styled(Button)``;
+
 const SeeAll: React.FC = () => {
+  const history = useHistory();
+
+  const goToCreate = () => {
+    history.push("/create");
+  };
+
   return (
-    <Container>
-      <TopBackground />
-      <Logo />
-      <VotesCard>
-        <CategoryTitle>Votações Atuais</CategoryTitle>
-        <CategoryTitle>Votações Futuras</CategoryTitle>
-        <CategoryTitle>Votações Fechadas</CategoryTitle>
-      </VotesCard>
-    </Container>
+    <BackgroundWithCard>
+      <Alert>
+        <AlertText>Crie sua votação de forma simples!</AlertText>
+        <AlertButton onClick={goToCreate}>Criar</AlertButton>
+      </Alert>
+      <CategoryTitle>Votações Atuais</CategoryTitle>
+      <Poll strip={isPair(0)}>
+        <PollName>Votação 1</PollName>
+        <PollEdit />
+        <PollDelete />
+        <PollVote>Votar</PollVote>
+      </Poll>
+      <CategoryTitle>Votações Futuras</CategoryTitle>
+      <CategoryTitle>Votações Fechadas</CategoryTitle>
+    </BackgroundWithCard>
   );
 };
 

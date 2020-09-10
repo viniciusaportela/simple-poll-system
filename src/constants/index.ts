@@ -1,1 +1,1 @@
-export const API_SERVER = "http://localhost/signovote/api/v1";
+export const API_SERVER = "http://localhost/signovote/api";

@@ -10,6 +10,32 @@ require_once(__DIR__ . '/../poll-options/PollOptionService.php');
 class PollService extends Service
 {
   /**
+   * Get data from a specific poll
+   * 
+   * returns the poll and it's options
+   */
+  public function get($pollId)
+  {
+    $getStatement = $this->db->prepare(
+      "SELECT 
+          `poll`.*,
+          JSON_ARRAYAGG(
+            JSON_OBJECT(
+              'id', `poll_option`.`id`,
+              'value', `poll_option`.`value`
+            )
+          ) as `options`
+        FROM `poll` 
+        LEFT JOIN `poll_option` ON `poll`.`id` = `poll_option`.`poll_id`
+        WHERE `poll`.`id` = 31
+        GROUP BY `poll`.`id`
+      "
+    );
+
+    return $getStatement->execute(array($pollId));
+  }
+
+  /**
    * Get a list of all current polls
    * separated by:
    * 
@@ -44,6 +70,8 @@ class PollService extends Service
       }
 
       $this->db->commit();
+
+      return (int)$pollId;
     } catch (Exception $e) {
       $this->db->rollback();
       http_response_code(500);
