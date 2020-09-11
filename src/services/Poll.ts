@@ -5,6 +5,9 @@ import treatCatch from "../utils/treatCatch";
 import formatDateToDatabaseDate from "../utils/formatDateToDatabaseDate";
 
 export default class PollService {
+  /**
+   * Get data from one Specific Poll
+   */
   static async get(pollId: number) {
     try {
       const res = await axios.get(`${API_SERVER}/v1/polls/`, {
@@ -17,6 +20,13 @@ export default class PollService {
     }
   }
 
+  /**
+   * Get a list of polls separated by
+   *
+   * - going - current available polls
+   * - finished - finished polls
+   * - soon - polls that are going to happen in future
+   */
   static async getAll() {
     try {
       const res = await axios.get(`${API_SERVER}/v1/polls/`);
@@ -27,6 +37,9 @@ export default class PollService {
     }
   }
 
+  /**
+   * Creates a Poll
+   */
   static async create({
     title,
     dateStart,
@@ -52,6 +65,12 @@ export default class PollService {
     }
   }
 
+  /**
+   * Edit a specific Poll with new data
+   *
+   * @param pollId PollId
+   * @param param1 New Data
+   */
   static async edit(
     pollId: number,
     {
@@ -79,6 +98,11 @@ export default class PollService {
     }
   }
 
+  /**
+   * Delete one specific poll
+   *
+   * @param pollId
+   */
   static async delete(pollId: any) {
     try {
       await axios({
