@@ -241,3 +241,17 @@ Example payload:
   }
 }
 ```
+
+## Polls-Votes
+
+### `POST` /v1/poll-votes/
+
+> Creates a Poll Vote
+
+example payload:
+
+```json
+{
+  "option_id": 3
+}
+```
