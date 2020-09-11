@@ -9,4 +9,5 @@ class ApiError
   public static $INVALID_DATE = 'invalid_date';
   public static $SHOULD_BE_ARRAY = 'should_be_array';
   public static $MISSING_PROPERTY = 'missing_property';
+  public static $INVALID_DATE_RANGE = 'invalid_date_range';
 }

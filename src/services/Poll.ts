@@ -83,7 +83,7 @@ export default class PollService {
     try {
       await axios({
         method: "DELETE",
-        data: { poll_id: pollId },
+        data: { poll_id: parseInt(pollId) },
         url: `${API_SERVER}/v1/polls/`,
       });
     } catch (e) {

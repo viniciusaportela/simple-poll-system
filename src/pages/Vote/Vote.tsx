@@ -1,4 +1,4 @@
-import React, { useEffect, useState } from "react";
+import React, { useEffect, useState, useRef } from "react";
 import { useParams, useHistory } from "react-router-dom";
 import styled from "styled-components";
 
@@ -7,9 +7,12 @@ import BackButton from "../../components/BackButton";
 import Checkbox from "../../components/Checkbox";
 import Button from "../../components/Button";
 
+import { WEBSOCKET_ADDRESS } from "../../constants";
+
 import PollService from "../../services/Poll";
 import Colors from "../../styles/colors";
 import PollVote from "../../services/PollVote";
+
 import formatDate from "../../utils/formatDate";
 import getDateFromString from "../../utils/getDateFromString";
 
@@ -55,6 +58,7 @@ const PollDate = styled.span`
 function Vote() {
   const history = useHistory();
   const { poll } = useParams();
+  const socket = useRef<WebSocket | null>(null);
 
   const [pollData, setPollData] = useState<
     PollWithOptionsAndVotes | undefined
@@ -78,6 +82,17 @@ function Vote() {
       .catch((e) => {
         alert("Erro ao carregar informações da votação");
       });
+
+    socket.current = new WebSocket(`${WEBSOCKET_ADDRESS}/?pollId=${poll}`);
+
+    socket.current.addEventListener("message", (ev) => {
+      const parsed = JSON.parse(ev.data);
+      setPollData(parsed);
+    });
+
+    return () => {
+      socket.current && socket.current.close();
+    };
   }, []);
 
   const getMinTimeFromDayString = (dateString: string) => {

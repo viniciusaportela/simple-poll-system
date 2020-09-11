@@ -27,6 +27,16 @@ Atente a mudar as configurações de acesso ao banco de dados mysql em `api/conf
 
 E mudar também o endereço da API como necessário em `src/constants/index.ts`
 
+Use `composer dump-autoload` se necessário em `api/`
+
+O servidor deve ser inicializado para que as votações em "tempo-real" funcione.
+
+Obs: Dado o limitado tempo, e o meu não tão aprofundado conhecimento em PHP (trabalho mais com NodeJS)
+apenas fiz com que os dados sejam verificados e atualizado de tempo em tempo no lado do servidor, e esses
+dados sejam enviados para o cliente via websocket
+
+> php server.php
+
 # Front-End
 
 O front-end foi construido com ReactJS com Typescript. Algumas bibliotecas foram utilizadas para auxiliar o desenvolvimento:

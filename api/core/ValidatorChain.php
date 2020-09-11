@@ -8,8 +8,8 @@ class ValidatorChain
   private $valueType;
 
   /**
-   * @param string $name - 
-   * @param mixed $value -
+   * @param string $name
+   * @param mixed $value
    * @param 'PURE'|'BODY' $valueType - if the value is validating is
    *  - PURE -> Pure Value
    *  - BODY -> Body Object it's Properties
@@ -104,6 +104,17 @@ class ValidatorChain
       return $this;
     } else {
       $this->throwError(ApiError::$SHOULD_BE_ARRAY);
+    }
+  }
+
+  public function isDateHigherOrEqualThan($otherDate)
+  {
+    $this->isValidDate();
+
+    if ($this->value >= $otherDate) {
+      return $this;
+    } else {
+      $this->throwError(ApiError::$INVALID_DATE_RANGE);
     }
   }
 
