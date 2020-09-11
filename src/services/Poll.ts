@@ -2,6 +2,7 @@ import axios from "axios";
 
 import { API_SERVER } from "../constants";
 import treatCatch from "../utils/treatCatch";
+import formatDateToDatabaseDate from "../utils/formatDateToDatabaseDate";
 
 export default class PollService {
   static async get(pollId: number) {
@@ -33,15 +34,15 @@ export default class PollService {
     options,
   }: {
     title: string;
-    dateStart: string;
-    dateEnd: string;
+    dateStart: Date;
+    dateEnd: Date;
     options: string[];
   }) {
     try {
       const res = await axios.post(`${API_SERVER}/v1/polls/`, {
         title,
-        date_start: dateStart,
-        date_end: dateEnd,
+        date_start: formatDateToDatabaseDate(dateStart),
+        date_end: formatDateToDatabaseDate(dateEnd),
         options,
       });
 

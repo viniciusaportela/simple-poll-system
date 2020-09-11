@@ -38,7 +38,7 @@ class PollService extends Service
           ) AS `options`
         FROM `poll` 
         LEFT JOIN `poll_option` ON `poll`.`id` = `poll_option`.`poll_id`
-        WHERE `poll`.`id` = 4
+        WHERE `poll`.`id` = ?
         GROUP BY `poll`.`id`
       "
     );
@@ -52,6 +52,7 @@ class PollService extends Service
       "title" => $res['title'],
       "date_start" => $res['date_start'],
       "date_end" => $res['date_end'],
+      "votes" => intval($res['votes']),
       "options" => json_decode($res['options']),
     );
   }

@@ -12,6 +12,7 @@ O projeto foi construido e testado usando as seguintes versões:
 > Apache 2.4.46
 > PHP 7.2.33
 > Node: ^12.16.3 (React)
+> Ratchet 0.4.3 para Websocket (Composer)
 
 > Usando 'mysql_native_password' como credenciais para acessar ao banco
 

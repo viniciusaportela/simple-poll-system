@@ -163,6 +163,7 @@ const SeeAll: React.FC = () => {
 
       {(polls?.finished.length || 0) > 0 && (
         <>
+          <CategoryTitle>Votações Finalizadas</CategoryTitle>
           {polls?.finished.map((poll, idx) => (
             <Poll strip={isPair(idx)}>
               <Col style={{ marginRight: "auto" }}>

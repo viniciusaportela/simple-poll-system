@@ -65,7 +65,7 @@ function Vote() {
   useEffect(() => {
     PollService.get(poll)
       .then((res: PollWithOptionsAndVotes) => {
-        if (new Date().getTime() > new Date(res.date_end).getTime()) {
+        if (new Date().getTime() > getMaxTimeFromDayString(res.date_end)) {
           setDisabled(true);
         }
 
@@ -75,6 +75,16 @@ function Vote() {
         alert("Erro ao carregar informações da votação");
       });
   }, []);
+
+  const getMaxTimeFromDayString = (dateString: string) => {
+    const date = new Date(dateString);
+
+    const maxTimeDateString = `${date.getDate()}/${
+      date.getMonth() + 1
+    }/${date.getFullYear()} 23:59:59`;
+
+    return new Date(maxTimeDateString).getTime();
+  };
 
   const goBack = () => {
     history.push("/");
@@ -115,7 +125,9 @@ function Vote() {
             disabled={disabled}
             onClick={onSelectOption}
           />
-          <OptionName htmlFor={String(option.id)}>{option.value}</OptionName>
+          <OptionName htmlFor={String(option.id)}>
+            {option.value} ({option.votes} Votos)
+          </OptionName>
         </Option>
       ))}
       {selectedOption && <VoteButton onClick={vote}>Votar</VoteButton>}

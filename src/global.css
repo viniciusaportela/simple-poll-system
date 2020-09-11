@@ -23,3 +23,10 @@ div {
   display: flex;
   flex-direction: column;
 }
+
+/* Fix React Calendar Styles (Since we changed all divs to fle-direction: column)*/
+.react-calendar__navigation,
+.react-calendar__month-view__weekdays,
+.react-calendar__month-view__days {
+  flex-direction: row;
+}

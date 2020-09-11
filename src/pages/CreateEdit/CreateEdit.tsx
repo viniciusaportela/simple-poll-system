@@ -1,5 +1,6 @@
 import React, { useState } from "react";
 import styled from "styled-components";
+import Calendar from "react-calendar";
 import { useHistory, useParams } from "react-router-dom";
 
 import BackgroundWithCard from "../../components/BackgroundWithCard";
@@ -15,6 +16,7 @@ import PollService from "../../services/Poll";
 import Add from "../../assets/images/add.png";
 import Edit from "../../assets/images/edit.png";
 import Delete from "../../assets/images/delete.png";
+import formatDate from "../../utils/formatDate";
 
 const Title = styled.h1`
   font-size: 1.3rem;
@@ -22,8 +24,9 @@ const Title = styled.h1`
 
 const Label = styled.label``;
 
-const Row = styled.div`
+const Row = styled.div<{ center?: boolean }>`
   flex-direction: row;
+  align-items: ${({ center }) => (center ? "center" : "flex-start")};
 `;
 
 const Col = styled.div`
@@ -82,6 +85,17 @@ const AddOptionButton = styled(Button).attrs({
   padding: 0.9rem;
 `;
 
+const BetweenDates = styled.span`
+  margin: 0 1.2rem;
+`;
+
+const CalendarContainer = styled.div`
+  background-color: ${Colors.GRAY_1};
+  margin: 1.2rem 0;
+  width: 100%;
+  align-items: center;
+`;
+
 const CreateEdit = () => {
   const history = useHistory();
   const { poll } = useParams();
@@ -90,6 +104,11 @@ const CreateEdit = () => {
   const [options, setOptions] = useState<string[]>([]);
   const [dateStart, setDateStart] = useState(new Date());
   const [dateEnd, setDateEnd] = useState(new Date());
+
+  const [calendarVisible, setCalendarVisible] = useState(false);
+  const [calendarValue, setCalendarValue] = useState<
+    undefined | "start" | "end"
+  >();
 
   const [isEditing, setIsEditing] = useState(false);
   const [optionInput, setOptionInput] = useState("");
@@ -107,13 +126,13 @@ const CreateEdit = () => {
       const res = await PollService.create({
         title,
         options,
-        dateStart: "2020/09/10",
-        dateEnd: "2020/09/11",
+        dateStart,
+        dateEnd,
       });
 
       history.push(`/vote/${res.id}`);
     } catch (e) {
-      // isApiError()
+      alert("Erro ao adicionar");
     }
   };
 
@@ -133,6 +152,21 @@ const CreateEdit = () => {
     });
   };
 
+  const openCalendar = (editDate: "start" | "end") => {
+    setCalendarVisible(true);
+    setCalendarValue(editDate);
+  };
+
+  const onDateChange = (date: Date | Date[]) => {
+    if (calendarValue === "start") {
+      setDateStart(date as Date);
+    } else if (calendarValue === "end") {
+      setDateEnd(date as Date);
+    }
+
+    setCalendarVisible(false);
+  };
+
   return (
     <BackgroundWithCard>
       <Row>
@@ -142,8 +176,31 @@ const CreateEdit = () => {
         </Col>
         <CreateButton onClick={create}>Criar</CreateButton>
       </Row>
+
       <Label>Título</Label>
       <Input state={[title, setTitle]} withMargin={5} />
+
+      <Label>Data</Label>
+      <Row center style={{ marginTop: 5 }}>
+        <Button onClick={() => openCalendar("start")}>
+          {formatDate(dateStart)}
+        </Button>
+        <BetweenDates>Até</BetweenDates>
+        <Button onClick={() => openCalendar("end")}>
+          {formatDate(dateEnd)}
+        </Button>
+      </Row>
+
+      {calendarVisible && (
+        <CalendarContainer>
+          <Calendar
+            onChange={onDateChange}
+            value={calendarValue === "start" ? dateStart : dateEnd}
+            minDate={calendarValue === "end" ? dateStart : undefined}
+          />
+        </CalendarContainer>
+      )}
+
       <OptionsHeader>
         <Col>
           <Subtitle>Opções</Subtitle>
