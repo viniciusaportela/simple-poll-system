@@ -39,15 +39,15 @@ dados sejam enviados para o cliente via websocket
 
 # Front-End
 
-O front-end foi construido com ReactJS com Typescript. Algumas bibliotecas foram utilizadas para auxiliar o desenvolvimento:
+O front-end foi construido com ReactJS e Typescript. Algumas bibliotecas foram utilizadas para auxiliar o desenvolvimento:
 
 ### styled-components
 
-Para o uso de CSS-in-JS
+Para o uso de CSS-in-JS para aumentar legibilidade e reaproveitamento
 
 ### axios
 
-Para realizar as requisições ao back-end em PHP
+Para realizar as requisições HTTP ao back-end em PHP
 
 ### react-calendar
 
@@ -73,7 +73,7 @@ O back-end foi desenvolvido em PHP com uma estrutura que se assemelha à arquite
 
 2. Controllers, Services e Routes são reunidos em uma única pasta separado pela sua função, logo, para qualquer ação relacionadas à votação, será localizada em `/api/v1/polls/**/*`
 
-3. os arquivos `index.php` dentro de /api/v1/[...] exercem a função de routers, logo, "escutam" e redirecionam para o Controller correto dependendo do método HTTP e de dependendo do caso, do payload
+3. os arquivos `index.php` em `/api/v1/*/index.php` exercem a função de routers, logo, "escutam" e redirecionam para o Controller correto dependendo do método HTTP e de dependendo do caso, do payload
 
 ## Routes
 
