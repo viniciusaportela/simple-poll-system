@@ -1,6 +1,7 @@
 <?php
 require_once(__DIR__ . '/../../core/Controller.php');
 require_once(__DIR__ . '/./PollService.php');
+require_once(__DIR__ . '/./PollValidator.php');
 
 class PollController extends Controller
 {
@@ -8,45 +9,58 @@ class PollController extends Controller
   {
     $database = new Database();
     $this->service = new PollService($database->con);
+    $this->validator = new PollValidator();
   }
 
   public function get()
   {
-    $pollId = $_GET['pollId'];
+    $this->try(function () {
+      $this->validator->get();
 
-    $poll = $this->service->get($pollId);
+      $pollId = $_GET['pollId'];
 
-    echo json_encode($poll);
+      $poll = $this->service->get($pollId);
+
+      echo json_encode($poll);
+    });
   }
 
   public function list()
   {
-    $polls = $this->service->list();
+    $this->try(function () {
+      $polls = $this->service->list();
 
-    echo json_encode($polls);
+      echo json_encode($polls);
+    });
   }
 
   public function create()
   {
-    $body = $this->json();
+    $this->try(function () {
+      $this->validator->create();
 
-    $pollId = $this->service->create(
-      $body->title,
-      $body->date_start,
-      $body->date_end,
-      $body->options
-    );
+      $body = $this->json();
 
-    echo json_encode(['id' => $pollId]);
+      $pollId = $this->service->create(
+        $body->title,
+        $body->date_start,
+        $body->date_end,
+        $body->options
+      );
 
-    http_response_code(201);
+      echo json_encode(['id' => $pollId]);
+
+      http_response_code(201);
+    });
   }
 
   public function update()
   {
-    $body = $this->json();
+    $this->try(function () {
+      $this->validator->update();
 
-    if (isset($body)) {
+      $body = $this->json();
+
       $this->service->update(
         $body->poll_id,
         $body->title,
@@ -54,21 +68,19 @@ class PollController extends Controller
         $body->date_end,
         $body->options
       );
-    } else {
-      http_response_code(500);
-    }
+    });
   }
 
   public function delete()
   {
-    $body = $this->json();
+    $this->try(function () {
+      $this->validator->delete();
 
-    if (isset($body)) {
+      $body = $this->json();
+
       $this->service->delete(
         $body->poll_id
       );
-    } else {
-      http_response_code(500);
-    }
+    });
   }
 }

@@ -5,8 +5,6 @@ class PollVoteService extends Service
 {
   public function create($optionId)
   {
-    echo $optionId;
-
     $createPollVoteStatement = $this->db->prepare(
       "INSERT INTO `poll_vote`(`poll_option_id`) VALUES(?)"
     );
