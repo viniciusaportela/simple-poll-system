@@ -11,6 +11,7 @@ import PollService from "../../services/Poll";
 import Colors from "../../styles/colors";
 import PollVote from "../../services/PollVote";
 import formatDate from "../../utils/formatDate";
+import getDateFromString from "../../utils/getDateFromString";
 
 const Title = styled.h1`
   font-size: 1.3rem;
@@ -65,7 +66,10 @@ function Vote() {
   useEffect(() => {
     PollService.get(poll)
       .then((res: PollWithOptionsAndVotes) => {
-        if (new Date().getTime() > getMaxTimeFromDayString(res.date_end)) {
+        if (
+          new Date().getTime() > getMaxTimeFromDayString(res.date_end) ||
+          new Date().getTime() < getMinTimeFromDayString(res.date_start)
+        ) {
           setDisabled(true);
         }
 
@@ -76,8 +80,14 @@ function Vote() {
       });
   }, []);
 
+  const getMinTimeFromDayString = (dateString: string) => {
+    const date = getDateFromString(dateString);
+
+    return new Date(date).getTime();
+  };
+
   const getMaxTimeFromDayString = (dateString: string) => {
-    const date = new Date(dateString);
+    const date = getDateFromString(dateString);
 
     const maxTimeDateString = `${date.getDate()}/${
       date.getMonth() + 1

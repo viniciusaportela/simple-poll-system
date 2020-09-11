@@ -44,6 +44,19 @@ class PollController extends Controller
 
   public function update()
   {
+    $body = $this->json();
+
+    if (isset($body)) {
+      $this->service->update(
+        $body->poll_id,
+        $body->title,
+        $body->date_start,
+        $body->date_end,
+        $body->options
+      );
+    } else {
+      http_response_code(500);
+    }
   }
 
   public function delete()

@@ -52,6 +52,33 @@ export default class PollService {
     }
   }
 
+  static async edit(
+    pollId: number,
+    {
+      title,
+      dateStart,
+      dateEnd,
+      options,
+    }: {
+      title: string;
+      dateStart: Date;
+      dateEnd: Date;
+      options: EditOptions;
+    }
+  ) {
+    try {
+      await axios.put(`${API_SERVER}/v1/polls/`, {
+        poll_id: pollId,
+        title,
+        date_start: formatDateToDatabaseDate(dateStart),
+        date_end: formatDateToDatabaseDate(dateEnd),
+        options,
+      });
+    } catch (e) {
+      treatCatch(e);
+    }
+  }
+
   static async delete(pollId: any) {
     try {
       await axios({

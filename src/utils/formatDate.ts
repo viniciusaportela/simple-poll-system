@@ -1,18 +1,15 @@
+import getDateFromString from "./getDateFromString";
+
+/**
+ * Format a given date to Brazil Date Standard
+ *
+ * Output Example: ```10/09/2020```
+ *
+ * @param dateInput
+ */
 export default function formatDate(dateInput: string | Date) {
-  let date;
-
-  if (typeof dateInput === "string") {
-    const dateParts = dateInput.split("-");
-    date = new Date(
-      parseInt(dateParts[0]),
-      parseInt(dateParts[1]) - 1,
-      parseInt(dateParts[2])
-    );
-  } else {
-    date = dateInput;
-  }
-
-  console.log("date ", date);
+  const date =
+    typeof dateInput === "string" ? getDateFromString(dateInput) : dateInput;
 
   const day = String(date.getDate()).padStart(2, "0");
   const month = String(date.getMonth() + 1).padStart(2, "0");

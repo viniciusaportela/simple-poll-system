@@ -41,15 +41,10 @@ example payload:
 
 ```json
 {
-  {
-	"title": "title",
-	"date_start": "2020/09/10",
-	"date_end": "2020/09/11",
-	"options": [
-		"option 1",
-		"option 2",
-	]
-}
+  "title": "title",
+  "date_start": "2020/09/10",
+  "date_end": "2020/09/11",
+  "options": ["option 1", "option 2"]
 }
 ```
 

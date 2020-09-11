@@ -43,3 +43,12 @@ declare interface PollWithOptionsAndVotes extends PollModel {
   votes: number;
   options: PollOptionWithVotes[];
 }
+
+declare interface EditOptions {
+  remove: number[];
+  add: string[];
+  edit: {
+    id: number;
+    value: string;
+  }[];
+}
