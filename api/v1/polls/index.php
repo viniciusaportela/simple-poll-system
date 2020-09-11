@@ -16,7 +16,6 @@ switch ($_SERVER['REQUEST_METHOD']) {
     } else {
       $controller->list();
     }
-
     break;
 
   case 'POST':
@@ -31,7 +30,11 @@ switch ($_SERVER['REQUEST_METHOD']) {
     $controller->delete();
     break;
 
+  case 'OPTIONS':
+    return 0;
+    break;
+
   default:
-    echo 'default';
+    http_response_code(404);
     break;
 }
