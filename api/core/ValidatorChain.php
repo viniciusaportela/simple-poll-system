@@ -122,10 +122,13 @@ class ValidatorChain
   {
     $this->isArray();
 
-    if (count($this->value) >= $size) {
+    if (count($this->value) > $size) {
       return $this;
     } else {
-      $this->throwError(ApiError::$INVALID_DATE);
+      $this->throwError(ApiError::$INVALID_ARRAY_SIZE, [
+        "must_length" => $size + 1,
+        "description" => "array should be higher than " . $size . " items"
+      ]);
     }
   }
 

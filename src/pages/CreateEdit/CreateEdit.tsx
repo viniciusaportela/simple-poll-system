@@ -154,7 +154,6 @@ const CreateEdit = () => {
   }, []);
 
   const goBack = () => {
-    console.log("goBack");
     history.goBack();
   };
 

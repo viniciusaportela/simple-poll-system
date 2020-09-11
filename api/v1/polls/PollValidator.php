@@ -27,7 +27,7 @@ class PollValidator extends Validator
     $this
       ->validate('date_end', $body, 'BODY')
       ->exists()
-      ->isValidDate();
+      ->isDateHigherOrEqualThan($body['date_start']);
 
     $this
       ->validate('options', $body, 'BODY')
@@ -52,7 +52,7 @@ class PollValidator extends Validator
     $this
       ->validate('date_end', $body, 'BODY')
       ->exists()
-      ->isValidDate();
+      ->isDateHigherOrEqualThan($body['date_start']);
 
     $this
       ->validate('options', $body, 'BODY')
