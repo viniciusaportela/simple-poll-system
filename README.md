@@ -1,10 +1,6 @@
-# signovote
+# votes-system
 
-> Candidato: Vinicius de Araújo Portela
->
-> Email: vinicius.portela.stm@gmail.com
-
-**Signovote** é apenas um pseudo-nome dado ao projeto
+Sistema simples de votação construido com ReactJS no frontend e PHP no backend
 
 # Pre-requisitos
 
@@ -30,10 +26,6 @@ E mudar também o endereço da API como necessário em `src/constants/index.ts`
 Use `composer dump-autoload` se necessário em `api/`
 
 O servidor deve ser inicializado para que as votações em "tempo-real" funcione.
-
-Obs: Dado o limitado tempo, e o meu não tão aprofundado conhecimento em PHP (trabalho mais com NodeJS)
-apenas fiz com que os dados sejam verificados e atualizado de tempo em tempo no lado do servidor, e esses
-dados sejam enviados para o cliente via websocket
 
 > php server.php
 
