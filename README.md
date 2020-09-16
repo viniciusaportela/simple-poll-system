@@ -55,8 +55,6 @@ Para criar a versão de produção, basta executa:
 
 > npm run build
 
-Sob condições normais eu não incluiria o `/build` no projeto mas como se trata de um teste, deixei a pasta pronta para acesso e uso
-
 # Back-End
 
 O back-end foi desenvolvido em PHP com uma estrutura que se assemelha à arquitetura MVC, com as seguintes observações:
