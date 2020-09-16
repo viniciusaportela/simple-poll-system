@@ -1,4 +1,4 @@
-# votes-system
+# easy-poll
 
 Sistema simples de votação construido com ReactJS no frontend e PHP no backend
 
