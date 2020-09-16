@@ -1,5 +1,5 @@
 {
-  "name": "signovote",
+  "name": "simple-poll-vote",
   "version": "1.0.0",
   "homepage": ".",
   "private": true,
@@ -44,6 +44,5 @@
       "last 1 firefox version",
       "last 1 safari version"
     ]
-  },
-  "devDependencies": {}
+  }
 }

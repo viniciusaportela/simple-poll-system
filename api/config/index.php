@@ -2,7 +2,7 @@
 $config = array(
   "connection" => array(
     "host" => "localhost",
-    "database" => "signovote",
+    "database" => "simplepollsystem",
     "user" => "root",
     "password" => "mysql",
   )

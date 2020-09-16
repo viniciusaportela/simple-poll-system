@@ -1,2 +1,2 @@
-CREATE DATABASE signovote;
-USE signovote;
+CREATE DATABASE simplepollsystem;
+USE simplepollsystem;
