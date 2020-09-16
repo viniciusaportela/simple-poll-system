@@ -1,6 +1,6 @@
 # simple-poll-system
 
-Sistema simples de votação construido com ReactJS no frontend e PHP no backend
+Sistema simples de votação construido com ReactJS no frontend e PHP e Mysql no backend
 
 # Pre-requisitos
 
